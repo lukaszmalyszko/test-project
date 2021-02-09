@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+
+  redis:
+    image: redis:latest
+    hostname: redis
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: web
+    command: gunicorn --config gunicorn_config.py app:app
+    environment:
+      DB_HOST: mysql
+      DB_NAME: flask
+      DB_USER: flask
+      DB_PASSWORD: semantive
+    volumes:
+      - .:/component
+    ports:
+      - "5000:5000"
+    links:
+      - redis
+      - mysql
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A project.worker.celery worker --loglevel=info
+    volumes:
+      - .:/component
+    depends_on:
+      - redis
+
+  mysql:
+    hostname: mysql
+    image: mysql:5.7
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d/
+      - ./dbdata:/var/lib/mysql/
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: semantive
+      MYSQL_DATABASE: flask
+      MYSQL_USER: flask
+      MYSQL_PASSWORD: semantive

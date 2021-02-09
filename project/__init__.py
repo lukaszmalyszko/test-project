@@ -1,10 +1,11 @@
+import os
+
 from flask import Flask
 
-from project.download_content import download_contents_blueprint
 from project.models import db
-from settings import CELERY_BROKER_URL, CELERY_RESULT_BACKEND, STORAGE_URI
-
-# celery = make_celery()
+from project.worker import celery
+from project.download_content import download_contents_blueprint
+from settings import CELERY_BROKER_URL, CELERY_RESULT_BACKEND, STORAGE_URI, LOCAL_ENV
 
 
 def create_app() -> Flask:
@@ -17,6 +18,10 @@ def create_app() -> Flask:
 
 def initialize_extensions(app: Flask):
     db.init_app(app)
+    if os.environ.get("RUN_MODE") != LOCAL_ENV:
+        with app.app_context():
+            db.create_all()
+            db.session.commit()
 
 
 def initialize_config(app: Flask):
