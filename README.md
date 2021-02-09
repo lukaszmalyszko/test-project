@@ -25,7 +25,8 @@ Aplikacja napisana we Flasku. Wykorzystane zostały SQLAlchemy, Celery oraz Redi
 
 Do zmiany:
 - sporo logiki znajduje się w handlerach - należałoby wydzielić kod 
-- refactor testów - trzymanie jednej metodyki (When-Given-Then)
+- refactor testów - trzymanie jednej metodyki (Given-When-Then)
+- zmiana pola name na required=True i dodanie walidacji przy POST
 - wydzielenie settingsów do jednego pliku np. yml i pobieranie wszystkiego ze zmiennych systemowych
 - jeśli miałby zostać lokalny adapter należałoby dodać dodatkowy volume
 
