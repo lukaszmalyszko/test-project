@@ -1,9 +1,8 @@
 from unittest.mock import Mock, patch
 from urllib.error import HTTPError, URLError
 
-from project.models import STATUS_ERROR, STATUS_READY, DownloadContent, Http, db, Image
-from project.schemas import ImageSchema
-from project.worker.handlers import _download_content_text, _download_content_images
+from project.models import STATUS_ERROR, STATUS_READY, DownloadContent, Http, db
+from project.worker.handlers import _download_content_images, _download_content_text
 from tests.fixture_factories import DownloadContentFactory
 from tests.unit.data.example_html import (
     get_example_html_code_in_bytes,
@@ -17,7 +16,7 @@ class TestDownloadContentTextHandler:
     def test_update_images_and_change_status_to_ready(
         self, urlopen_mock, urlretrieve_mock, init_database
     ):
-        self.__given_download_content(url='http://test.pl')
+        self.__given_download_content(url="http://test.pl")
         self.__given_urlopen_mock(urlopen_mock)
 
         _download_content_images(self.download_content_data["id"])
@@ -83,7 +82,8 @@ class TestDownloadContentTextHandler:
 
     def __then_download_content_images_should_be_updated(self):
         download_content = DownloadContent.query.get(self.download_content_data["id"])
-        expected_images = ["static/tmp/python-logo.png"]
+        download_date = self.download_content_data["download_date"].strftime("%Y-%m-%d")
+        expected_images = [f"static/tmp/{download_date}/python-logo.png"]
 
         self.__assert_images(download_content, expected_images)
         assert download_content.status == STATUS_READY

@@ -7,8 +7,6 @@ env/
 env*
 dist/
 build/
-dbdata/
-initdb/
 *.egg
 *.egg-info/
 _mailinglist

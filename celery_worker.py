@@ -1,7 +1,13 @@
-from celery import Celery
+import logging
 
-from settings import CELERY_BROKER_URL, CELERY_RESULT_BACKEND
+from app import app as flask_app
+from project.worker import app as celery
 
 
 def make_celery():
-    return Celery("tasks", broker=CELERY_BROKER_URL, backend=CELERY_RESULT_BACKEND)
+    celery.init_app(flask_app)
+    logging.error(f"dupa{flask_app.config}")
+    return celery
+
+
+app = make_celery()

@@ -4,9 +4,10 @@ from flask import request
 from marshmallow import ValidationError
 
 from project.models import STATUS_PENDING, DownloadContent, Http, db
-from project.worker.handlers import download_content_images, download_content_text
-
 from project.schemas import DownloadContentSchema
+from project.worker.handlers import (download_content_images,
+                                     download_content_text)
+
 from . import download_contents_blueprint
 
 GET_CONTENT_TYPES_MAP = {

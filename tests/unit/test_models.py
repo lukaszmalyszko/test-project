@@ -25,7 +25,9 @@ def test_download_content_with_image_return_both():
 
     download_content = DownloadContent(**download_content_data)
 
-    download_content_data["download_date"] = __prepare_download_date(download_content_data)
+    download_content_data["download_date"] = __prepare_download_date(
+        download_content_data
+    )
     download_content_data["images"] = [ImageSchema().dump(image)]
     assert download_content.both() == download_content_data
 

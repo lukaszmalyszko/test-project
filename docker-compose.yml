@@ -29,7 +29,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: celery -A project.worker.celery worker --loglevel=info
+    command: celery -A celery_worker.app worker --loglevel=info
+    environment:
+      DB_HOST: mysql
+      DB_NAME: flask
+      DB_USER: flask
+      DB_PASSWORD: semantive
     volumes:
       - .:/component
     depends_on:

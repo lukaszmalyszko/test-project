@@ -4,8 +4,7 @@ from google.cloud import storage
 
 from project.adapters.local_adapter import LocalAdapter
 
-
-CLOUD_PATH = 'https://storage.googleapis.com/'
+CLOUD_PATH = "https://storage.googleapis.com/"
 # 'https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME'
 
 
@@ -20,7 +19,7 @@ class GCSAdapter(LocalAdapter):
         cloud_paths = []
         for image in images_paths:
             local_path = image["path"]
-            filename = local_path.split('/')[-1]
+            filename = local_path.split("/")[-1]
             self.__upload_blob(local_path, filename)
             pathlib.Path.unlink(local_path)
             cloud_paths.append({"path": f"{CLOUD_PATH}/{self.bucket_name}/{filename}"})
@@ -30,3 +29,4 @@ class GCSAdapter(LocalAdapter):
         """Uploads a file to the bucket."""
         blob = self.bucket.blob(destination_blob_name)
         blob.upload_from_filename(source_file_name)
+

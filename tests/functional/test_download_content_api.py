@@ -1,8 +1,5 @@
-from unittest.mock import ANY, patch
+from unittest.mock import patch
 
-import pytest
-
-from project import download_contents_blueprint
 from project.models import DownloadContent, Http, db
 from tests.fixture_factories import DownloadContentFactory
 
@@ -28,12 +25,12 @@ class TestRestDownloadContent:
 
         assert response.status_code == Http.NOT_FOUND
         assert response.json == expected_response
-    
+
     def test_get_return_unprocessable_entity_response_when_cant_find_only_content_type(
         self, test_client, init_database
     ):
         self.__given_download_content()
-        expected_response = {'msg': 'Not acceptable response.'}
+        expected_response = {"msg": "Not acceptable response."}
         url = f"/extractor/{self.download_content_data['id']}"
 
         response = test_client.get(url, content_type="application/json")
@@ -83,12 +80,10 @@ class TestRestDownloadContent:
         }
         url = "/extractor/"
 
-        response = test_client.post(
-            url, json=body, content_type="application/json"
-        )
+        response = test_client.post(url, json=body, content_type="application/json")
 
         assert response.status_code == Http.NOT_ACCEPTABLE
-        assert response.json == {'msg': 'Not acceptable response.'}
+        assert response.json == {"msg": "Not acceptable response."}
 
     @patch("project.download_content.download_contents.download_content_images")
     def test_create_download_content_and_send_task_for_images(
@@ -110,7 +105,11 @@ class TestRestDownloadContent:
     @patch("project.download_content.download_contents.download_content_images")
     @patch("project.download_content.download_contents.download_content_text")
     def test_create_download_content_and_send_task_for_both(
-        self, download_content_text_mock, download_content_images_mock, test_client, init_database
+        self,
+        download_content_text_mock,
+        download_content_images_mock,
+        test_client,
+        init_database,
     ):
         body = {
             "url": "https://www.test.pl/",

@@ -32,11 +32,6 @@ class Image(db.Model):
 
 
 class Http(IntEnum):
-    """Enum z obsługiwanymi przez nas statusami http.
-
-    .. autoclasstoc::
-    """
-
     OK = 200  #: Zwracane jeżeli nie wystąpiły błędy
     CREATED = 201  #: Zwracane przez zapytania POST/PUT jeżeli udało się utworzyć obiekt
     NO_CONTENT = 204  #: Zwracane w przypadku, gdy API nie musi zwracać treści odpowiedzi (np. usunięcie obiektu)

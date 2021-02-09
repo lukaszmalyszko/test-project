@@ -2,9 +2,10 @@ import urllib.request
 from urllib.error import HTTPError, URLError
 
 from project.adapters.local_adapter import LocalAdapter
-from project.models import STATUS_ERROR, STATUS_READY, DownloadContent, Image, db
+from project.models import (STATUS_ERROR, STATUS_READY, DownloadContent, Image,
+                            db)
 from project.utils import clear_html_and_parse_to_text, get_images_url
-from project.worker import celery
+from project.worker import app as celery
 
 
 @celery.task(name="tasks.download_content_images")
@@ -19,7 +20,8 @@ def _download_content_images(
     content = _get_content(download_content)
     if content:
         images = get_images_url(content, download_content.url)
-        storage_images = adapter.upload_images(images)
+        download_date = download_content.download_date.strftime("%Y-%m-%d")
+        storage_images = adapter.upload_images(images, download_date)
         for image in storage_images:
             image_obj = Image(**image)
             db.session.add(image_obj)
