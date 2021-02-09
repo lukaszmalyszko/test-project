@@ -14,8 +14,8 @@ class GCSAdapter(LocalAdapter):
         self.bucket_name = bucket_name
         self.bucket = self.storage_client.bucket(bucket_name)
 
-    def upload_images(self, images) -> list:
-        images_paths = super().upload_images(images)
+    def upload_images(self, images, download_date) -> list:
+        images_paths = super().upload_images(images, download_date)
         cloud_paths = []
         for image in images_paths:
             local_path = image["path"]
