@@ -33,5 +33,5 @@ Do zmiany:
 Co poszło nie po mojej myśli:
 - inicjalizacja obiektu celery + sposób przekazywania do niego konfiguracji 
 - zapisywanie plików lokalnie zamiast w chmurze
-- brak skryptu tworzącego bazę danych z migracji 
-- brak skryptu do uruchamiania aplikacji np. make start
+- brak automatyzacji do tworzenia bazy danych z migracji 
+- brak automatyzacji do uruchamiania aplikacji np. make start
