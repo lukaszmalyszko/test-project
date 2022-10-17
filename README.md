@@ -1,4 +1,4 @@
-# semantive-project
+
 
 Zbudowanie projektu:
 
