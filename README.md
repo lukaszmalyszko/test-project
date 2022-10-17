@@ -17,21 +17,4 @@ curl --header "Content-Type: application/json;only=both" --request POST --data '
 
 
   
----
-
-# Podsumowanie
-
-Aplikacja napisana we Flasku. Wykorzystane zostały SQLAlchemy, Celery oraz Redis. Postanowiłem stworzyć API w oparciu o Content-Type. Zabieg moim zdaniem uprościł endpointy w aplikacji. Oprócz adresu url użytkownik powinien podawać name, aby od strony cms rozpoznawać obiekty po nazwie (w założeniu że api służyłoby w cms, który będzie miał wylistowane obiekty). Napisałem dwa adaptery obsługujące pobieranie obrazków - docelowo użyłbym clouda do ich przechowywania. Starałem się wszystko pisać w TDD.
-
-Do zmiany:
-- sporo logiki znajduje się w handlerach - należałoby wydzielić kod 
-- refactor testów - trzymanie jednej metodyki (Given-When-Then)
-- zmiana pola name na required=True i dodanie walidacji przy POST
-- wydzielenie settingsów do jednego pliku np. yml i pobieranie wszystkiego ze zmiennych systemowych
-- jeśli miałby zostać lokalny adapter należałoby dodać dodatkowy volume
-
-Co poszło nie po mojej myśli:
-- inicjalizacja obiektu celery + sposób przekazywania do niego konfiguracji 
-- zapisywanie plików lokalnie zamiast w chmurze
-- brak automatyzacji do tworzenia bazy danych z migracji 
-- brak automatyzacji do uruchamiania aplikacji np. make start
+--
